@@ -59,12 +59,11 @@ Access the applciation at http://localhost:4200/.
 # Run unit and harness test suites
 npm test
 ```
-
-```Code block
 ### Clean Baseline Commit on `main`
 
 Run the following commands in your terminal:
 
+### Testing
 ```bash
 # 1. Format all project files
 npx prettier --write
