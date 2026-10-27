@@ -1,59 +1,77 @@
-# CloudTelemetryStudio
+# CloudTelemetry Studio
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.4.
+> High-throughput, real-time distributed telemetry dashboard build with Modern Angular, fine-grained Signals, and Zoneless Change Detection.
 
-## Development server
+[![Angular Version](https://img.shields.io/badge/Angular-19-dd0031.svg)](https://angular.dev)
 
-To start a local development server, run:
+---
 
+## Architectural Overview
+
+CloudTelemetry Studio visualizes high-frequency system telemetry (CPU, memory, tail latencies, error budgets) across microservice nodes without the performance overhead of legacy dirty-checking engines.
+
+### Key Architectural Pillars
+- **Zoneless Fine-Grained Reactivity:** Zero Zone.js overhead. State changes trigger direct DOM modifications via `signal()`, `computed()`, and `linkedSignal()`.
+- **Hybrid Streaming Pipeline:** High-frequency raw data streams managed via RxJS observables and bridged cleanly to template signals via `@angular/core/rxjs-interop`.
+- **Deferred Loading (`@defer`):** Heavy visualization components are lazily-loaded on viewport intersection, optimizing bundle size and Core Web Vitals.
+- **Enterprise Signal Store:** State isolation using `@ngrx/signals`, providing deep immutability, selectors and entity adapters.
+- **Component Test Harness:** UI components tested via black-box harnesses (`@angular/cdk/testing) to eliminate brittle DOM queries.
+
+---
+
+## Project Structure
+
+```text
+src/app/
++-- core/                           # Singleton services, streaming engines
+|    +-- telemetry_streams.ts
++-- features/                       # Feature slices
+|    +-- dashboard/                 # Main telemetry grid
+|    +-- topology_map/              # Microservice topology visualizer
++-- shared/                         # Presentation components and utility directives    
++-- main.ts                         # Application entry point
+```
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js >=20.x
+- npm >= 10.x
+
+### Installation and Run
 ```bash
-ng serve
+# Clone the repository
+git clone https://github.com/amalsindhusasidharan/cloud-telemetry-studio.git
+cd cloud-telemetry-studio
+
+# Install dependencies
+npm install
+
+# Start local dev server
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Access the applciation at http://localhost:4200/.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### Testing
 ```bash
-ng generate component component-name
+# Run unit and harness test suites
+npm test
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+```Code block
+### Clean Baseline Commit on `main`
+
+Run the following commands in your terminal:
 
 ```bash
-ng generate --help
+# 1. Format all project files
+npx prettier --write
+
+# 2. Stage all modifications and additions
+git add .
+
+# 3. Create foundational baseline commit
+git commit -m "chore: config prettier, install cdk and ngrx-signals, establish base readme"
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
