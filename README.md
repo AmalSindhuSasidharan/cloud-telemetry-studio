@@ -63,6 +63,7 @@ npm test
 
 Run the following commands in your terminal:
 
+### Testing
 ```bash
 # 1. Format all project files
 npx prettier --write
