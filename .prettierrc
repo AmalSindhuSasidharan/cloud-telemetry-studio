@@ -1,6 +1,9 @@
 {
   "printWidth": 100,
   "singleQuote": true,
+  "trailingComma": "all",
+  "semi": true,
+  "htmlWhitespaceSensitivity": "ignore",
   "overrides": [
     {
       "files": "*.html",
