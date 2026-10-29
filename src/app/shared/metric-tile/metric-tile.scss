@@ -1,0 +1,59 @@
+.raw-tile {
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    border-color: #1a73e8;
+  }
+  &.selected {
+    border: 2px solid #1a73e8;
+    background: #f8fafd;
+  }
+  &.alert {
+    border-left: 4px solid #d93025;
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    .name {
+      font-weight: 600;
+      color: #202124;
+    }
+    .status-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      &.healthy {
+        background-color: #e6f4ea;
+        color: #137333;
+      }
+      &.degraded {
+        background-color: #fef7e0;
+        color: #b06000;
+      }
+      &.critical {
+        background-color: #fce8e6;
+        color: #c5221f;
+      }
+    }
+
+    .title-body {
+      font-size: 14px;
+      color: #3c4043;
+    }
+    p {
+      margin: 4px 0;
+    }
+    .error-message {
+      color: #d93025;
+      font-weight: 500;
+    }
+  }
+}

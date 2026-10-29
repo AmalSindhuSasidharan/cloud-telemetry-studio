@@ -8,42 +8,32 @@
     </div>
   }
 </header>
+<div class="summary-card">
+  <div class="summary-item">
+    <span class="summary-label">Total Services</span>
+    <span class="summary-value">{{ serviceSnapshots().length }}</span>
+  </div>
+  <div class="summary-item">
+    <span class="summary-label">Critical</span>
+    <span class="summary-value">{{ criticalCount() }}</span>
+  </div>
+  <div class="summary-item">
+    <span class="summary-label">Degraded</span>
+    <span class="summary-value">{{ degradedCount() }}</span>
+  </div>
+  <div class="summary-item">
+    <span class="summary-label">Healthy</span>
+    <span class="summary-value">{{ healthyCount() }}</span>
+  </div>
+</div>
 
 <div class="grid">
   @for (snap of serviceSnapshots(); track snap.serviceId) {
-    <div
-      class="raw-tile"
-      [class.selected]="snap.serviceId === selectedServiceId()"
-      [class.alert]="snap.status === 'critical'"
-      (click)="selectService(snap.serviceId)"
-    >
-      <div class="title">
-        <span class="name">{{ snap.serviceName }}</span>
-        -
-        <span class="status-tag" [class]="snap.status">{{ snap.status }}</span>
-      </div>
-      <div class="title-body">
-        <p>
-          CPU:
-          <strong>{{ snap.cpuPercent }}%</strong>
-        </p>
-        <p>
-          Latency:
-          <strong>{{ snap.latencyMs }}ms</strong>
-        </p>
-        <p>
-          Memory:
-          <strong>{{ snap.memoryMb }}MB</strong>
-        </p>
-
-        @if (snap.errorCount > 0) {
-          <p class="error-message">
-            <span class="error-icon">⚠️</span>
-            {{ snap.errorCount }} errors
-          </p>
-        }
-      </div>
-    </div>
+    <app-metric-tile
+      [snapshot]="snap"
+      [isSelected]="selectedServiceId() === snap.serviceId"
+      (selected)="selectService($event)"
+    ></app-metric-tile>
   } @empty {
     <p class="loading-state">Connecting to telemetry stream engine...</p>
   }
