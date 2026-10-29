@@ -1,0 +1,33 @@
+<div
+  class="raw-tile"
+  [class.selected]="isSelected()"
+  [class.alert]="snapshot().status === 'critical'"
+  (click)="onCardClick()"
+>
+  <div class="title">
+    <span class="name">{{ snapshot().serviceName }}</span>
+    -
+    <span class="status-tag" [class]="snapshot().status">{{ snapshot().status }}</span>
+  </div>
+  <div class="title-body">
+    <p>
+      CPU:
+      <strong>{{ snapshot().cpuPercent }}%</strong>
+    </p>
+    <p>
+      Latency:
+      <strong>{{ snapshot().latencyMs }}ms</strong>
+    </p>
+    <p>
+      Memory:
+      <strong>{{ snapshot().memoryMb }}MB</strong>
+    </p>
+
+    @if (snapshot().errorCount > 0) {
+      <p class="error-message">
+        <span class="error-icon">⚠️</span>
+        {{ snapshot().errorCount }} errors
+      </p>
+    }
+  </div>
+</div>

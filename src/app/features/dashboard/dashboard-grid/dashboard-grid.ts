@@ -1,9 +1,10 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
 import { TelemetryStream } from '../../../core/telemetry_stream';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MetricTile } from '../../../shared/metric-tile/metric-tile';
 
 @Component({
-  imports: [],
+  imports: [MetricTile],
   selector: 'app-dashboard-grid',
   styleUrl: './dashboard-grid.scss',
   templateUrl: './dashboard-grid.html',
@@ -25,19 +26,13 @@ export class DashboardGrid {
     this.selectedServiceId.update((current) => (current === serviceId ? null : serviceId));
   }
 
-  constructor() {
-    console.log('DashboardGrid initialized with serviceSnapshots:', this.serviceSnapshots());
-    setTimeout(() => {
-      console.log('After 1 second, serviceSnapshots:', this.serviceSnapshots());
-    }, 1000);
-    setTimeout(() => {
-      console.log('After 1 second, serviceSnapshots:', this.serviceSnapshots());
-    }, 2000);
-    setTimeout(() => {
-      console.log('After 1 second, serviceSnapshots:', this.serviceSnapshots());
-    }, 3000);
-    setTimeout(() => {
-      console.log('After 1 second, serviceSnapshots:', this.serviceSnapshots());
-    }, 4000);
-  }
+  protected readonly criticalCount = computed(
+    () => this.serviceSnapshots().filter((snap) => snap.status === 'critical').length,
+  );
+  protected readonly degradedCount = computed(
+    () => this.serviceSnapshots().filter((snap) => snap.status === 'degraded').length,
+  );
+  protected readonly healthyCount = computed(
+    () => this.serviceSnapshots().filter((snap) => snap.status === 'healthy').length,
+  );
 }
