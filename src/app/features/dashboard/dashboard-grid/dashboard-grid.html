@@ -1,0 +1,50 @@
+<header class="dashboard-header">
+  <h2>Active Microservices Telemetry</h2>
+  <p class="sub-title">Live real-time operational metrics across distributed nodes</p>
+  @if (selectedServiceId()) {
+    <div class="selected-badge">
+      Inspecting:
+      <strong>{{ selectedServiceId() }}</strong>
+    </div>
+  }
+</header>
+
+<div class="grid">
+  @for (snap of serviceSnapshots(); track snap.serviceId) {
+    <div
+      class="raw-tile"
+      [class.selected]="snap.serviceId === selectedServiceId()"
+      [class.alert]="snap.status === 'critical'"
+      (click)="selectService(snap.serviceId)"
+    >
+      <div class="title">
+        <span class="name">{{ snap.serviceName }}</span>
+        -
+        <span class="status-tag" [class]="snap.status">{{ snap.status }}</span>
+      </div>
+      <div class="title-body">
+        <p>
+          CPU:
+          <strong>{{ snap.cpuPercent }}%</strong>
+        </p>
+        <p>
+          Latency:
+          <strong>{{ snap.latencyMs }}ms</strong>
+        </p>
+        <p>
+          Memory:
+          <strong>{{ snap.memoryMb }}MB</strong>
+        </p>
+
+        @if (snap.errorCount > 0) {
+          <p class="error-message">
+            <span class="error-icon">⚠️</span>
+            {{ snap.errorCount }} errors
+          </p>
+        }
+      </div>
+    </div>
+  } @empty {
+    <p class="loading-state">Connecting to telemetry stream engine...</p>
+  }
+</div>
