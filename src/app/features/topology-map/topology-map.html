@@ -1,0 +1,55 @@
+<div class="topology-container">
+  <div class="graph-legend">
+    <span class="legend-item">
+      <span class="dot healthy">Healthy</span>
+    </span>
+    <span class="legend-item">
+      <span class="dot degraded">Degraded</span>
+    </span>
+    <span class="legend-item">
+      <span class="dot critical">Critical</span>
+    </span>
+  </div>
+
+  <svg viewBox="0 0 600 400" class="topology-canvas">
+    <!-- Dependency Edges -->
+    <g class="edges">
+      @for (link of links(); track link.source.id + '-' + link.target.id) {
+        <line
+          class="edge-line"
+          [attr.x1]="link.source.x"
+          [attr.y1]="link.source.y"
+          [attr.x2]="link.target.x"
+          [attr.y2]="link.target.y"
+        ></line>
+      }
+    </g>
+
+    <!-- Microservice Nodes -->
+    <g class="nodes">
+      @for (snap of snapshots(); track snap.serviceId) {
+        @let coord = getNodeCoordinates(snap.serviceId);
+        @let isNodeSelected = selectedServiceId() === snap.serviceId;
+
+        <g
+          class="node-group"
+          [class.selected]="isNodeSelected"
+          [attr.transform]="'translate(' + coord.x + ',' + coord.y + ')'"
+          (click)="selectNode(snap.serviceId)"
+        >
+          <!-- Outer pulsing circle for anomalies -->
+          @if (snap.status === 'critical') {
+            <circle class="pulse-ring" r="26"></circle>
+          }
+
+          <!-- Main service circle -->
+          <circle class="node-circle" r="18" [class]="snap.status"></circle>
+          <!-- Service label -->
+          <text y="32" class="node-label">
+            {{ snap.serviceName }}
+          </text>
+        </g>
+      }
+    </g>
+  </svg>
+</div>
