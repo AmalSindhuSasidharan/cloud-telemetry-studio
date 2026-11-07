@@ -1,3 +1,34 @@
-<app-dashboard-grid></app-dashboard-grid>
+<!-- <router-outlet /> -->
+<main class="app-layout">
+  <header class="app-header">
+    <div class="brand">
+      <h1>Cloud Telemetry Studio</h1>
+      <span class="live-badge">LIVE STREAM</span>
+    </div>
+  </header>
 
-<router-outlet />
+  <div class="content-body">
+    <!-- Defer loading the visualizer until the browser is idle -->
+    <section class="section-card">
+      <h2 class="section-title">Service Dependency Topology</h2>
+      @defer (on idle) {
+        <app-topology-map
+          [snapshots]="snapshots()"
+          [selectedServiceId]="selectedServiceId()"
+          (nodeSelected)="onServiceSelected($event)"
+        ></app-topology-map>
+      } @placeholder (minimum 300ms) {
+        <div class="placeholder-skeleton">
+          <span>Initializing service mesh topology view...</span>
+        </div>
+      } @loading {
+        <span>Loading topology visualizer chunk...</span>
+      }
+    </section>
+    <!-- Telemetry card grid -->
+    <section class="section-card">
+      <h2 class="section-title">Service telemetry metrics</h2>
+      <app-dashboard-grid></app-dashboard-grid>
+    </section>
+  </div>
+</main>
