@@ -8,13 +8,14 @@
   </header>
 
   <div class="content-body">
+    <app-filter-toolbar></app-filter-toolbar>
     <!-- Defer loading the visualizer until the browser is idle -->
     <section class="section-card">
       <h2 class="section-title">Service Dependency Topology</h2>
       @defer (on idle) {
         <app-topology-map
-          [snapshots]="snapshots()"
-          [selectedServiceId]="selectedServiceId()"
+          [snapshots]="store.snapshots()"
+          [selectedServiceId]="store.selectedServiceId()"
           (nodeSelected)="onServiceSelected($event)"
         ></app-topology-map>
       } @placeholder (minimum 300ms) {
