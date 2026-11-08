@@ -1,40 +1,43 @@
 <header class="dashboard-header">
   <h2>Active Microservices Telemetry</h2>
   <p class="sub-title">Live real-time operational metrics across distributed nodes</p>
-  @if (selectedServiceId()) {
+  @if (store.selectedServiceId()) {
     <div class="selected-badge">
       Inspecting:
-      <strong>{{ selectedServiceId() }}</strong>
+      <strong>{{ store.selectedServiceId() }}</strong>
     </div>
   }
 </header>
 <div class="summary-card">
   <div class="summary-item">
     <span class="summary-label">Total Services</span>
-    <span class="summary-value">{{ serviceSnapshots().length }}</span>
+    <span class="summary-value">{{ store.snapshots().length }}</span>
   </div>
   <div class="summary-item">
     <span class="summary-label">Critical</span>
-    <span class="summary-value">{{ criticalCount() }}</span>
+    <span class="summary-value">{{ store.criticalCount() }}</span>
   </div>
   <div class="summary-item">
     <span class="summary-label">Degraded</span>
-    <span class="summary-value">{{ degradedCount() }}</span>
+    <span class="summary-value">{{ store.degradedCount() }}</span>
   </div>
   <div class="summary-item">
     <span class="summary-label">Healthy</span>
-    <span class="summary-value">{{ healthyCount() }}</span>
+    <span class="summary-value">{{ store.healthyCount() }}</span>
   </div>
 </div>
 
 <div class="grid">
-  @for (snap of serviceSnapshots(); track snap.serviceId) {
+  @for (snap of store.filteredSnapshots(); track snap.serviceId) {
     <app-metric-tile
       [snapshot]="snap"
-      [isSelected]="selectedServiceId() === snap.serviceId"
-      (selected)="selectService($event)"
+      [isSelected]="store.selectedServiceId() === snap.serviceId"
+      (selected)="handleSelectService($event)"
     ></app-metric-tile>
   } @empty {
-    <p class="loading-state">Connecting to telemetry stream engine...</p>
+    <!-- <p class="loading-state">Connecting to telemetry stream engine...</p> -->
+    <div class="empty-state">
+      <p>No services match the active filter criteria.</p>
+    </div>
   }
 </div>

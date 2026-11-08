@@ -1,0 +1,23 @@
+<nav class="toolbar">
+  <div class="search-box">
+    <input
+      type="search"
+      placeholder="Filter by service name or ID..."
+      [value]="store.searchQuery()"
+      (input)="onSearchInput($event)"
+      aria-label="Filter services"
+    />
+  </div>
+  <div class="filter-chips">
+    @for (opt of filterOptions; track opt.value) {
+      <button
+        type="button"
+        class="chip"
+        [class.active]="store.statusFilter() === opt.value"
+        (click)="onFilterChange(opt.value)"
+      >
+        {{ opt.label }}
+      </button>
+    }
+  </div>
+</nav>
