@@ -5,8 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:gh-pages": "ng build --base-href /cloud-telemetry-studio/ && cp dist/cloud-telemetry-studio/browse/index.html dist/cloud-telemetry-studio/browse/404.html",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "format": "prettier --write",
+    "format:check": "prettier --check"
   },
   "private": true,
   "packageManager": "npm@11.19.1",
