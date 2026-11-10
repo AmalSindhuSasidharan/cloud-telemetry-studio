@@ -19,9 +19,9 @@ CloudTelemetry Studio visualizes high-frequency system telemetry (CPU, memory, t
 
 ### Architectural Decision Record
 - **Why Zoneless?** Reduced bundle size and eliminated global dirty-checking cycles during 500ms intervals.
-- **Why NgRx SignalStore?** Lightweight functional composition (withState, withComputed, withMethods, withHooks) over legacy action/reducer boilerplate.
-- **Why @defer?** Split the SVG Topology graph into a lazy chunk loaded on idle, preventing Cumulative Layout Shift (CLS) via @placeholder.
-- **Why Component Harness?** Decoupled tests from brittle DOM selectors via @angular/cdk/testing. 
+- **Why NgRx SignalStore?** Lightweight functional composition (`withState`, `withComputed`, `withMethods`, `withHooks`) over legacy `action/reducer` boilerplate.
+- **Why @defer?** Split the SVG Topology graph into a lazy chunk loaded on idle, preventing Cumulative Layout Shift (CLS) via `@placeholder`.
+- **Why Component Harness?** Decoupled tests from brittle DOM selectors via `@angular/cdk/testing`. 
 ---
 
 ## Project Structure
