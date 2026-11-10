@@ -17,6 +17,11 @@ CloudTelemetry Studio visualizes high-frequency system telemetry (CPU, memory, t
 - **Enterprise Signal Store:** State isolation using `@ngrx/signals`, providing deep immutability, selectors and entity adapters.
 - **Component Test Harness:** UI components tested via black-box harnesses (`@angular/cdk/testing) to eliminate brittle DOM queries.
 
+### Architectural Decision Record
+- **Why Zoneless?** Reduced bundle size and eliminated global dirty-checking cycles during 500ms intervals.
+- **Why NgRx SignalStore?** Lightweight functional composition (withState, withComputed, withMethods, withHooks) over legacy action/reducer boilerplate.
+- **Why @defer?** Split the SVG Topology graph into a lazy chunk loaded on idle, preventing Cumulative Layout Shift (CLS) via @placeholder.
+- **Why Component Harness?** Decoupled tests from brittle DOM selectors via @angular/cdk/testing. 
 ---
 
 ## Project Structure
